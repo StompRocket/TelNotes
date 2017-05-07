@@ -1,6 +1,6 @@
 {
 
     "name": "TelNotes",
-    "description": "A simple, straightforward note taking SSH notes.",
+    "description": "A simple, straightforward telnet note taking program.",
     "version": "0.0.1"
 }
