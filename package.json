@@ -1,5 +1,5 @@
 {
-    "name": "SCAMNotes",
-    "description": "THis is a scam!!!",
+    "name": "TelNotes",
+    "description": "A simple, straightforward note taking telnet client.",
     "version": "0.0.1"
 }
