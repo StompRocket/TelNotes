@@ -27,7 +27,6 @@ var server = net.createServer(function (conn) {
 			}
 		} else {
 
-
 			broadcast('\033[96m >' + nickname + ': \033[39m' + data + '\n');
 
 		}
