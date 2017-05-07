@@ -5,16 +5,20 @@ var server = net.createServer(function (conn) {
 	conn.write(
 		'Welcome to TelNotes. \nPlease type in your username, if you are creating an account type signup\n>'
 	);
-
+	var loggedin, signup, username, password;
 	conn.on('data', function (data) {
 		console.log(data);
 		data = data.replace('\r\n', '');
-		if (data == "signup") {
-			console.log('signup start');
-			conn.write(
-				'please create a username: '
-			);
+		if (!loggedin) {
+			if (data == "signup") {
+				console.log('signup start');
+				conn.write(
+					'please create a username: '
+				);
+				signup = true;
+			}
 		}
+
 
 	});
 
