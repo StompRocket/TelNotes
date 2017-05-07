@@ -1,6 +1,11 @@
 var net = require('net')
 var fs = require("fs");
-var users = require('./database/users.json');
+var stringy = require("stringy");
+var users = fs.readFileSync("database/users.json", "utf8");
+console.log(users);
+users = JSON.parse(users);
+console.log(users);
+
 
 var server = net.createServer(function (conn) {
 	console.log('\033[90m new connection!\033[39m');
@@ -13,6 +18,8 @@ var server = net.createServer(function (conn) {
 		verifying = false,
 		username = null,
 		password = null;
+
+
 	conn.on('data', function (data) {
 		console.log(data);
 		data = data.replace('\r\n', '');
@@ -26,21 +33,7 @@ var server = net.createServer(function (conn) {
 				return;
 			}
 			if (signup) {
-				function censor(censor) {
-					var i = 0;
 
-					return function (key, value) {
-						if (i !== 0 && typeof (censor) === 'object' && typeof (value) == 'object' && censor == value)
-							return '[Circular]';
-
-						if (i >= 29) // seems to be a harded maximum of 30 serialized objects?
-							return '[Unknown]';
-
-						++i; // so we know we aren't using the original object anymore
-
-						return value;
-					}
-				}
 				if (users[data]) {
 					conn.write('\033[93m> Username already in use. try again: \033[39m');
 					return;
@@ -57,7 +50,20 @@ var server = net.createServer(function (conn) {
 						conn.write('Password verifed');
 						verifying = false;
 						users[username] = password;
-						var store = JSON.stringify(censor(users));
+						var cache = [];
+						var store = JSON.stringify(users, function (key, value) {
+							if (typeof value === 'object' && value !== null) {
+								if (cache.indexOf(value) !== -1) {
+									// Circular reference found, discard key
+									return;
+								}
+								// Store value in our collection
+								cache.push(value);
+							}
+							return value;
+						});
+						cache = null;
+
 						fs.writeFile('./database/users.json', store, function (err) {
 							if (err) {
 								return console.log(err);

@@ -2,5 +2,9 @@
 
     "name": "TelNotes",
     "description": "A simple, straightforward telnet note taking program.",
-    "version": "0.0.1"
+    "version": "0.0.1",
+	"dependencies":{
+		"stringy":"0.1.0"
+	}
+	
 }
