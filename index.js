@@ -4,7 +4,7 @@ var server = net.createServer(function (conn) {
 	conn.write(
 		
 	);
-	count++;
+	
 	conn.setEncoding('utf8');
 	
 	conn.on('data', function (data) {
