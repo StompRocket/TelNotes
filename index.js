@@ -3,16 +3,16 @@ var server = net.createServer(function (conn) {
 	console.log('\033[90m new connection!\033[39m');
 	conn.setEncoding('utf8');
 	conn.write(
-'Welcome to TelNotes. \nPlease type in your username, if you are creating an account type signup\n>'
+		'Welcome to TelNotes. \nPlease type in your username, if you are creating an account type signup\n>'
 	);
 
 	conn.on('data', function (data) {
 		console.log(data);
 		data = data.replace('\r\n', '');
-		if (data == "signup"){
+		if (data == "signup") {
 			console.log('signup start');
 			conn.write(
-			'please create a username: '
+				'please create a username: '
 			);
 		}
 
