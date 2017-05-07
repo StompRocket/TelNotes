@@ -26,7 +26,21 @@ var server = net.createServer(function (conn) {
 				return;
 			}
 			if (signup) {
+				function censor(censor) {
+					var i = 0;
 
+					return function (key, value) {
+						if (i !== 0 && typeof (censor) === 'object' && typeof (value) == 'object' && censor == value)
+							return '[Circular]';
+
+						if (i >= 29) // seems to be a harded maximum of 30 serialized objects?
+							return '[Unknown]';
+
+						++i; // so we know we aren't using the original object anymore
+
+						return value;
+					}
+				}
 				if (users[data]) {
 					conn.write('\033[93m> Username already in use. try again: \033[39m');
 					return;
@@ -42,6 +56,14 @@ var server = net.createServer(function (conn) {
 					if (data == password) {
 						conn.write('Password verifed');
 						verifying = false;
+						users[username] = password;
+						var store = JSON.stringify(users);
+						fs.writeFile('./database/users.json', store, function (err) {
+							if (err) {
+								return console.log(err);
+							}
+							console.log('saved');
+						});
 					} else {
 						conn.write('Passwords do not mach try again: ');
 					}
