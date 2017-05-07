@@ -12,7 +12,7 @@ var server = net.createServer(function (conn) {
 		if (data == "signup"){
 			console.log('signup start');
 			conn.write(
-			'please write your username: '
+			'please create a username: '
 			);
 		}
 
