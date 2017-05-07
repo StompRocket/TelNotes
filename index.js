@@ -1,12 +1,18 @@
 var net = require('net')
-var users = {};
+var fs = require("fs");
+var users = require('./database/users.json');
+
 var server = net.createServer(function (conn) {
 	console.log('\033[90m new connection!\033[39m');
 	conn.setEncoding('utf8');
 	conn.write(
 		'Welcome to TelNotes. \nPlease type in your username, if you are creating an account type signup\n>'
 	);
-	var loggedin = false, signup = false, verifying = false, username = null, password = null;
+	var loggedin = false,
+		signup = false,
+		verifying = false,
+		username = null,
+		password = null;
 	conn.on('data', function (data) {
 		console.log(data);
 		data = data.replace('\r\n', '');
@@ -20,7 +26,7 @@ var server = net.createServer(function (conn) {
 				return;
 			}
 			if (signup) {
-				
+
 				if (users[data]) {
 					conn.write('\033[93m> Username already in use. try again: \033[39m');
 					return;
@@ -28,11 +34,11 @@ var server = net.createServer(function (conn) {
 					users[username] = conn;
 					conn.write('Please create a password: ');
 					username = data;
-				} else if (!password){
+				} else if (!password) {
 					password = data;
 					conn.write('Please verify your password: ');
-					 verifying = true;
-				} else if (verifying){
+					verifying = true;
+				} else if (verifying) {
 					if (data == password) {
 						conn.write('Password verifed');
 						verifying = false;
