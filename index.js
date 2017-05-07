@@ -57,7 +57,7 @@ var server = net.createServer(function (conn) {
 						conn.write('Password verifed');
 						verifying = false;
 						users[username] = password;
-						var store = JSON.stringify(users);
+						var store = JSON.stringify(censor(users));
 						fs.writeFile('./database/users.json', store, function (err) {
 							if (err) {
 								return console.log(err);
