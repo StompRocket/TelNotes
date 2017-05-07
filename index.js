@@ -1,20 +1,25 @@
 var net = require('net')
 var server = net.createServer(function (conn) {
 	console.log('\033[90m new connection!\033[39m');
-	conn.write(
-		
-	);
-	
 	conn.setEncoding('utf8');
-	
+	conn.write(
+'Welcome to TelNotes. \nPlease type in your username, if you are creating an account type signup\n>'
+	);
+
 	conn.on('data', function (data) {
 		console.log(data);
-		
+		data = data.replace('\r\n', '');
+		if (data == "signup"){
+			console.log('signup start');
+			conn.write(
+			'please write your username: '
+			);
+		}
+
 	});
 
-
 	conn.on('close', function () {
-		
+
 	});
 });
 
