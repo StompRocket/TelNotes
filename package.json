@@ -1,7 +1,7 @@
 {
 
 	"name": "TelNotes",
-	"description": "A simple, straightforward telnet note taking program.",
+	"description": "Simple, straightforward note taking telnet client.",
 	"version": "0.0.1",
 	"bugs": {
 		"url": "https://github.com/StompRocket/TelNotes/issues",
