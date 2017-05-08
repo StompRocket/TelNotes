@@ -4,8 +4,6 @@ var users = fs.readFileSync("database/users.json", "utf8");
 console.log(users);
 users = JSON.parse(users);
 console.log(users);
-
-
 var server = net.createServer(function (conn) {
 	console.log('\033[90m new connection!\033[39m');
 	conn.setEncoding('utf8');
@@ -16,6 +14,7 @@ var server = net.createServer(function (conn) {
 		signup = false,
 		verifying = false,
 		username = null,
+		editing = false,
 		password = null;
 
 
@@ -23,7 +22,7 @@ var server = net.createServer(function (conn) {
 		console.log(data);
 		data = data.replace('\r\n', '');
 		if (!loggedin) {
-			if (data == "signup") {
+			if (data === "signup") {
 				console.log('signup start');
 				conn.write(
 					'please create a username: '
@@ -42,10 +41,15 @@ var server = net.createServer(function (conn) {
 						conn.write('unknown username try again: ');
 					}
 				} else {
-					if (users[username] == data) {
+					if (users[username] === data) {
 						conn.write('Loggedin \n');
 						loggedin = true;
-						conn.write('Welcome '+ username);
+						conn.write('Welcome ' + username);
+						conn.write(
+							'To create a new note, type new.\n' +
+							'To open an existing note, type open hit enter then type the note name.\n' +
+							'To list all notes in your account, type list.'
+						);
 						return;
 					} else {
 						conn.write('wrong password try again: ');
@@ -67,7 +71,7 @@ var server = net.createServer(function (conn) {
 					conn.write('Please verify your password: ');
 					verifying = true;
 				} else if (verifying) {
-					if (data == password) {
+					if (data === password) {
 						conn.write('Password verifed\n');
 						verifying = false;
 						users[username] = password;
@@ -91,7 +95,12 @@ var server = net.createServer(function (conn) {
 							}
 							console.log('saved');
 							loggedin = true;
-							conn.write('Welcome '+ username);
+							conn.write('Welcome ' + username);
+							conn.write(
+								'To create a new note, type new.\n' +
+								'To open an existing note, type open hit enter then type the note name.\n' +
+								'To list all notes in your account, type list.'
+							);
 						});
 					} else {
 						conn.write('Passwords do not mach try again: ');
@@ -101,7 +110,21 @@ var server = net.createServer(function (conn) {
 			}
 
 		} else {
-			
+			if (!editing) {
+
+				if (data === "new") {
+
+				} else if (data === "list") {
+
+				} else if (data === "open") {
+
+				} else {
+					conn.write(
+						'Invalid Command'
+					);
+				}
+			}
+
 		}
 
 
