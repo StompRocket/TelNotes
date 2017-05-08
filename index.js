@@ -1,6 +1,5 @@
 var net = require('net')
 var fs = require("fs");
-var stringy = require("stringy");
 var users = fs.readFileSync("database/users.json", "utf8");
 console.log(users);
 users = JSON.parse(users);
@@ -31,6 +30,27 @@ var server = net.createServer(function (conn) {
 				);
 				signup = true;
 				return;
+			} else if (!signup) {
+				if (!password) {
+					if (users[data]) {
+						conn.write('please enter your password: ');
+						password = "pross";
+						username = data;
+
+						return;
+					} else {
+						conn.write('unknown username try again: ');
+					}
+				} else {
+					if (users[username] == data) {
+						conn.write('Loggedin \n');
+						loggedin = true;
+						return;
+					} else {
+						conn.write('wrong password try again: ');
+					}
+				}
+
 			}
 			if (signup) {
 
@@ -47,7 +67,7 @@ var server = net.createServer(function (conn) {
 					verifying = true;
 				} else if (verifying) {
 					if (data == password) {
-						conn.write('Password verifed');
+						conn.write('Password verifed\n');
 						verifying = false;
 						users[username] = password;
 						var cache = [];
@@ -69,6 +89,7 @@ var server = net.createServer(function (conn) {
 								return console.log(err);
 							}
 							console.log('saved');
+							loggedin = true;
 						});
 					} else {
 						conn.write('Passwords do not mach try again: ');
@@ -76,13 +97,14 @@ var server = net.createServer(function (conn) {
 				}
 
 			}
+
 		}
 
 
 	});
 
 	conn.on('close', function () {
-
+		console.log(username + 'disconnected\n');
 	});
 });
 

@@ -6,9 +6,7 @@
 	"bugs": {
 		"url": "https://github.com/StompRocket/TelNotes/issues",
 		"email": "stomprocketinc@gmail.com"
-	},
-	"dependencies": {
-		"stringy": "0.1.0"
 	}
+	
 
 }
