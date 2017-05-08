@@ -1,4 +1,4 @@
-var net = require('net')
+var net = require('net');
 var fs = require("fs");
 var users = fs.readFileSync("database/users.json", "utf8");
 console.log(users);
@@ -136,5 +136,6 @@ var server = net.createServer(function (conn) {
 });
 
 server.listen(3000, function () {
+
 	console.log('\033[96m  server listening on *:3000\033[39m');
 });

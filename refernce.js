@@ -1,4 +1,4 @@
-var net = require('net')
+var net = require('net');
 var count = 0,
 	users = {};
 var server = net.createServer(function (conn) {
