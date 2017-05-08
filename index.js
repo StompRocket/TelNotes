@@ -45,6 +45,7 @@ var server = net.createServer(function (conn) {
 					if (users[username] == data) {
 						conn.write('Loggedin \n');
 						loggedin = true;
+						conn.write('Welcome '+ username);
 						return;
 					} else {
 						conn.write('wrong password try again: ');
@@ -90,6 +91,7 @@ var server = net.createServer(function (conn) {
 							}
 							console.log('saved');
 							loggedin = true;
+							conn.write('Welcome '+ username);
 						});
 					} else {
 						conn.write('Passwords do not mach try again: ');
@@ -98,6 +100,8 @@ var server = net.createServer(function (conn) {
 
 			}
 
+		} else {
+			
 		}
 
 
