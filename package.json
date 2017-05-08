@@ -1,10 +1,14 @@
 {
 
-    "name": "TelNotes",
-    "description": "A simple, straightforward telnet note taking program.",
-    "version": "0.0.1",
-	"dependencies":{
-		"stringy":"0.1.0"
+	"name": "TelNotes",
+	"description": "A simple, straightforward telnet note taking program.",
+	"version": "0.0.1",
+	"bugs": {
+		"url": "https://github.com/StompRocket/TelNotes/issues",
+		"email": "stomprocketinc@gmail.com"
+	},
+	"dependencies": {
+		"stringy": "0.1.0"
 	}
-	
+
 }
